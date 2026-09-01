@@ -22,7 +22,13 @@ header {
   background: linear-gradient(90deg, #000000 0%, #0a1a3a 100%);
   border-bottom: 2px solid #0066ff;
   padding: 1.5rem 0;
-  position: sticky;header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.2);
+}
+
+header {
   width: 100%;
 }
 
@@ -30,10 +36,6 @@ header {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
-}
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 0 20px rgba(0, 102, 255, 0.2);
 }
 
 .header-content {
@@ -73,7 +75,8 @@ nav a:hover, nav a.active {
   border-bottom: 2px solid #0066ff;
 }
 
-.hero {  width: 100%;
+.hero {
+  width: 100%;
   padding: 8rem 2rem;
   text-align: center;
   background: linear-gradient(135deg, #000000 0%, #0a1a3a 50%, #000000 100%);
@@ -83,7 +86,17 @@ nav a:hover, nav a.active {
   display: flex;
   align-items: center;
   justify-content: center;
-}  
+}
+
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
 
 .hero h1 {
   font-size: 3.5rem;
@@ -357,6 +370,9 @@ nav a:hover, nav a.active {
 
 <div id="home" class="page active">
   <section class="hero">
+    <video autoplay muted loop class="hero-video">
+      <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GxNTu6wCbLfRvLl2dBFl2WSWhr/hf_20260901_100925_e9525e1b-f893-429e-881a-8c4f2c1b81e0.mp4" type="video/mp4">
+    </video>
     <div>
       <h1>AI-Genererte Videoer for Din Bedrift</h1>
       <p>Profesjonelle reklamevideoer og markedsføringsvideo laget med kunstig intelligens. Rask produksjon, høy kvalitet, rimelige priser.</p>
