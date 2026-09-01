@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ferdigweb.no - AI-Genererte Videoer</title>
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #000000;
+  color: #e5e5e5;
+  line-height: 1.6;
+}
+
+header {
+  background: linear-gradient(90deg, #000000 0%, #0a1a3a 100%);
+  border-bottom: 2px solid #0066ff;
+  padding: 1.5rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.2);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  background: linear-gradient(90deg, #0066ff, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+nav {
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  color: #e5e5e5;
+  text-decoration: none;
+  font-weight: 500;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s ease;
+}
+
+nav a:hover, nav a.active {
+  color: #00d4ff;
+  border-bottom: 2px solid #0066ff;
+}
+
+.hero {
+  padding: 8rem 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #000000 0%, #0a1a3a 50%, #000000 100%);
+  position: relative;
+  overflow: hidden;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #00d4ff, #0066ff, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  color: #a0d4ff;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-btn {
+  background: linear-gradient(90deg, #0066ff, #00d4ff);
+  color: #000;
+  padding: 0.9rem 2.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);
+}
+
+.cta-btn:hover {
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+  transform: scale(1.05);
+}
+
+.portfolio-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.portfolio-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.portfolio-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #00d4ff, #0066ff, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.portfolio-header p {
+  color: #a0d4ff;
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.project-card {
+  background: linear-gradient(135deg, #0a1a3a 0%, #000000 100%);
+  border: 2px solid #0066ff;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+}
+
+.project-card:hover {
+  border-color: #00d4ff;
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
+  transform: translateY(-8px);
+}
+
+.video-placeholder {
+  width: 100%;
+  height: 200px;
+  background: linear-gradient(135deg, #0a1a3a, #000000);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  color: #0066ff;
+  border-bottom: 2px solid #0066ff;
+}
+
+.project-content {
+  padding: 1.5rem;
+}
+
+.project-content h3 {
+  color: #00d4ff;
+  margin-bottom: 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.project-content p {
+  color: #a0d4ff;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.contact-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.contact-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.contact-header h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  background: linear-gradient(90deg, #00d4ff, #0066ff, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+.contact-header p {
+  color: #a0d4ff;
+  max-width: 600px;
+  margin: 0 auto;
+  font-size: 1.1rem;
+}
+
+.contact-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.contact-info {
+  background: linear-gradient(135deg, #0a1a3a 0%, #000000 100%);
+  border: 2px solid #0066ff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+}
+
+.contact-info h3 {
+  color: #00d4ff;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+.info-item {
+  margin-bottom: 1.5rem;
+}
+
+.info-label {
+  color: #0066ff;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.info-value {
+  color: #e5e5e5;
+  font-size: 1.1rem;
+}
+
+.contact-form {
+  background: linear-gradient(135deg, #0a1a3a 0%, #000000 100%);
+  border: 2px solid #0066ff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-group label {
+  display: block;
+  color: #e5e5e5;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  padding: 0.75rem;
+  background: #000000;
+  border: 2px solid #0066ff;
+  border-radius: 4px;
+  color: #00d4ff;
+  font-size: 1rem;
+}
+
+.form-group textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.submit-btn {
+  background: linear-gradient(90deg, #0066ff, #00d4ff);
+  color: #000;
+  border: none;
+  padding: 0.9rem 2rem;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);
+}
+
+.submit-btn:hover {
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
+  transform: scale(1.02);
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .contact-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="logo">ferdigweb</div>
+    <nav>
+      <a onclick="showPage('home')" class="nav-link active">Hjem</a>
+      <a onclick="showPage('portfolio')" class="nav-link">Portefølje</a>
+      <a onclick="showPage('contact')" class="nav-link">Kontakt</a>
+    </nav>
+  </div>
+</header>
+
+<div id="home" class="page active">
+  <section class="hero">
+    <div>
+      <h1>AI-Genererte Videoer for Din Bedrift</h1>
+      <p>Profesjonelle reklamevideoer og markedsføringsvideo laget med kunstig intelligens. Rask produksjon, høy kvalitet, rimelige priser.</p>
+      <button class="cta-btn" onclick="showPage('portfolio')">Se Porteføljen</button>
+    </div>
+  </section>
+</div>
+
+<div id="portfolio" class="page">
+  <div class="portfolio-container">
+    <div class="portfolio-header">
+      <h1>Portefølje</h1>
+      <p>Utforsk våre nyeste AI-genererte videoprosjekter. Fra engasjerende reklamevideoer til dynamiske produktpresentasjoner – vi leverer profesjonell kvalitet raskt og effektivt.</p>
+    </div>
+
+    <div class="portfolio-grid">
+      <div class="project-card">
+        <div class="video-placeholder">▶</div>
+        <div class="project-content">
+          <h3>E-handel Reklame</h3>
+          <p>Dynamisk produktvideo med 3D-modeller og smooth kamera-bevegelser. Ideelt for å øke konversjoner på nettsiden din. Klar på 72 timer.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="video-placeholder">▶</div>
+        <div class="project-content">
+          <h3>Bedriftspresentasjon</h3>
+          <p>Kort, kraftfull presentasjonsvideo som forklarer tjenestene dine. Med AI-generert stemmeskrift og profesjonell musikk. Gjør deg ut fra konkurrentene.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="video-placeholder">▶</div>
+        <div class="project-content">
+          <h3>Social Media Reel</h3>
+          <p>30-sekunders AI-generert reel for restaurant. Viser mat, atmosfære og gjester. Optimalisert for Instagram og TikTok.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="video-placeholder">▶</div>
+        <div class="project-content">
+          <h3>Corporate Event</h3>
+          <p>Sammenklipping av firmafest/konferanse med AI-enhanced bildekvalitet og dynamiske overganger. Dele på LinkedIn og intern kommunikasjon.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="contact" class="page">
+  <div class="contact-section">
+    <div class="contact-header">
+      <h1>Kontakt</h1>
+      <p>Klar for å få laget en AI-video for bedriften din? Kontakt oss i dag – vi svarer innen 24 timer.</p>
+    </div>
+
+    <div class="contact-container">
+      <div class="contact-info">
+        <h3>Kontaktinfo</h3>
+        <div class="info-item">
+          <div class="info-label">📧 E-post</div>
+          <div class="info-value">din.email@ferdigweb.no</div>
+        </div>
+        <div class="info-item">
+          <div class="info-label">💬 Emne</div>
+          <div class="info-value">Avtale time, spørsmål om pris, eller beskriv ditt prosjekt</div>
+        </div>
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #0066ff; color: #a0d4ff; font-size: 0.9rem;">
+          Vi spesialiserer oss på AI-genererte videoer som er rask, rimelig og profesjonell. Uansett om du trenger produktvideo, reklame eller bedriftspresentasjon – vi leverer resultater som selger.
+        </div>
+      </div>
+
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-group">
+          <label>Ditt navn *</label>
+          <input type="text" placeholder="Navn" required>
+        </div>
+        <div class="form-group">
+          <label>Din e-post *</label>
+          <input type="email" placeholder="E-post" required>
+        </div>
+        <div class="form-group">
+          <label>Emne *</label>
+          <input type="text" placeholder="Emne" required>
+        </div>
+        <div class="form-group">
+          <label>Melding *</label>
+          <textarea placeholder="Beskriv ditt prosjekt..." required></textarea>
+        </div>
+        <button type="submit" class="submit-btn">Send melding</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(page).classList.add('active');
+  
+  document.querySelectorAll('.nav-link').forEach(link => link.classList.remove('active'));
+  event.target.classList.add('active');
+  
+  window.scrollTo(0, 0);
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  alert('Takk for meldingen! Vi svarer innen 24 timer.');
+  e.target.reset();
+}
+</script>
+
+</body>
+</html>
