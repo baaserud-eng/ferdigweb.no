@@ -11,35 +11,55 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: #000000;
-  color: #e5e5e5;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 50%, #0f172a 100%);
+  color: #f1f5f9;
   line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Animated background gradient */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 20% 50%, rgba(168, 85, 247, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at 80% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%);
+  animation: gradientShift 15s ease infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 header {
-  background: linear-gradient(90deg, #000000 0%, #0a1a3a 100%);
-  border-bottom: 2px solid #0066ff;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
   padding: 1.5rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: 0 0 20px rgba(0, 102, 255, 0.2);
-}
-
-header {
-  width: 100%;
 }
 
 .header-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.header-content {
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 2rem;
   display: flex;
@@ -49,8 +69,9 @@ header {
 
 .logo {
   font-size: 1.8rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #0066ff, #00d4ff);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, #a855f7 0%, #06b6d4 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -58,34 +79,48 @@ header {
 
 nav {
   display: flex;
-  gap: 2rem;
+  gap: 3rem;
 }
 
 nav a {
-  color: #e5e5e5;
+  color: #cbd5e1;
   text-decoration: none;
   font-weight: 500;
+  font-size: 0.95rem;
   cursor: pointer;
-  border-bottom: 2px solid transparent;
-  transition: all 0.3s ease;
+  position: relative;
+  transition: color 0.3s ease;
 }
 
-nav a:hover, nav a.active {
-  color: #00d4ff;
-  border-bottom: 2px solid #0066ff;
+nav a::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #a855f7, #06b6d4);
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after,
+nav a.active::after {
+  width: 100%;
+}
+
+nav a:hover {
+  color: #f1f5f9;
 }
 
 .hero {
-  width: 100%;
-  padding: 8rem 2rem;
-  text-align: center;
-  background: linear-gradient(135deg, #000000 0%, #0a1a3a 50%, #000000 100%);
-  position: relative;
-  overflow: hidden;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 4rem 2rem;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
 }
 
 .hero-video {
@@ -96,261 +131,404 @@ nav a:hover, nav a.active {
   height: 100%;
   object-fit: cover;
   z-index: -1;
+  opacity: 0.6;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%);
+  animation: float 20s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(30px, -30px); }
+}
+
+.hero-content {
+  max-width: 900px;
+  position: relative;
+  z-index: 2;
 }
 
 .hero h1 {
-  font-size: 3.5rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(90deg, #00d4ff, #0066ff, #00d4ff);
+  font-size: clamp(2.5rem, 8vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
+}
+
+.hero h1 span {
+  background: linear-gradient(135deg, #a855f7 0%, #06b6d4 50%, #fbbf24 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-weight: 700;
 }
 
 .hero p {
-  font-size: 1.3rem;
-  color: #a0d4ff;
-  margin-bottom: 2rem;
+  font-size: 1.2rem;
+  color: #cbd5e1;
+  margin-bottom: 2.5rem;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 400;
 }
 
 .cta-btn {
-  background: linear-gradient(90deg, #0066ff, #00d4ff);
-  color: #000;
-  padding: 0.9rem 2.5rem;
+  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+  color: #fff;
+  padding: 1rem 2.5rem;
   font-weight: 600;
+  font-size: 1rem;
   cursor: pointer;
   border: none;
-  border-radius: 4px;
-  font-size: 1rem;
+  border-radius: 8px;
   transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.4);
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.cta-btn:hover::before {
+  left: 100%;
 }
 
 .cta-btn:hover {
-  box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
-  transform: scale(1.05);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(168, 85, 247, 0.6);
 }
 
-.portfolio-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 2rem;
+.portfolio-section {
+  max-width: 1400px;
+  margin: 8rem auto 0;
+  padding: 6rem 2rem;
 }
 
-.portfolio-header {
+.section-header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 5rem;
 }
 
-.portfolio-header h1 {
-  font-size: 2.5rem;
+.section-header h2 {
+  font-size: 3rem;
+  font-weight: 800;
   margin-bottom: 1rem;
-  background: linear-gradient(90deg, #00d4ff, #0066ff, #00d4ff);
+  letter-spacing: -0.02em;
+}
+
+.section-header h2 span {
+  background: linear-gradient(135deg, #a855f7, #06b6d4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  font-weight: 700;
 }
 
-.portfolio-header p {
-  color: #a0d4ff;
-  max-width: 600px;
-  margin: 0 auto;
+.section-header p {
   font-size: 1.1rem;
+  color: #cbd5e1;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .portfolio-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
+  margin-bottom: 4rem;
 }
 
 .project-card {
-  background: linear-gradient(135deg, #0a1a3a 0%, #000000 100%);
-  border: 2px solid #0066ff;
-  border-radius: 8px;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 12px;
   overflow: hidden;
-  transition: all 0.3s ease;
-  box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+  position: relative;
+  group: "card";
+}
+
+.project-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2) 0%, transparent 70%);
+  transition: all 0.4s ease;
+  pointer-events: none;
 }
 
 .project-card:hover {
-  border-color: #00d4ff;
-  box-shadow: 0 0 40px rgba(0, 212, 255, 0.5);
-  transform: translateY(-8px);
+  border-color: rgba(168, 85, 247, 0.5);
+  transform: translateY(-12px);
+  background: rgba(15, 23, 42, 0.6);
+  box-shadow: 0 20px 60px rgba(168, 85, 247, 0.2);
 }
 
-.video-placeholder {
+.project-card:hover::before {
+  top: 0;
+  right: 0;
+}
+
+.video-icon {
   width: 100%;
-  height: 200px;
-  background: linear-gradient(135deg, #0a1a3a, #000000);
+  aspect-ratio: 16/9;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(6, 182, 212, 0.1));
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 4rem;
-  color: #0066ff;
-  border-bottom: 2px solid #0066ff;
+  font-size: 3.5rem;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.video-icon::after {
+  content: '';
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(168, 85, 247, 0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .video-icon::after {
+  border-color: #a855f7;
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.5);
 }
 
 .project-content {
-  padding: 1.5rem;
+  padding: 2rem;
 }
 
 .project-content h3 {
-  color: #00d4ff;
-  margin-bottom: 0.5rem;
-  font-size: 1.2rem;
-  font-weight: 600;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+  color: #f1f5f9;
 }
 
 .project-content p {
-  color: #a0d4ff;
+  color: #cbd5e1;
   font-size: 0.95rem;
-  line-height: 1.5;
+  line-height: 1.6;
 }
 
 .contact-section {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 3rem 2rem;
+  max-width: 1400px;
+  margin: 8rem auto 0;
+  padding: 6rem 2rem;
 }
 
-.contact-header {
-  text-align: center;
-  margin-bottom: 3rem;
-}
-
-.contact-header h1 {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(90deg, #00d4ff, #0066ff, #00d4ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 700;
-}
-
-.contact-header p {
-  color: #a0d4ff;
-  max-width: 600px;
-  margin: 0 auto;
-  font-size: 1.1rem;
-}
-
-.contact-container {
+.contact-wrapper {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-  max-width: 900px;
-  margin: 0 auto;
+  gap: 4rem;
+  align-items: start;
 }
 
 .contact-info {
-  background: linear-gradient(135deg, #0a1a3a 0%, #000000 100%);
-  border: 2px solid #0066ff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  padding: 3rem;
+  border-radius: 12px;
+  height: fit-content;
 }
 
 .contact-info h3 {
-  color: #00d4ff;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  background: linear-gradient(135deg, #a855f7, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .info-item {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .info-label {
-  color: #0066ff;
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
+  color: #a855f7;
+  font-size: 0.85rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
 .info-value {
-  color: #e5e5e5;
-  font-size: 1.1rem;
+  color: #f1f5f9;
+  font-size: 1.05rem;
+  font-weight: 500;
 }
 
 .contact-form {
-  background: linear-gradient(135deg, #0a1a3a 0%, #000000 100%);
-  border: 2px solid #0066ff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 0 20px rgba(0, 102, 255, 0.3);
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  padding: 3rem;
+  border-radius: 12px;
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.8rem;
 }
 
 .form-group label {
   display: block;
-  color: #e5e5e5;
-  margin-bottom: 0.5rem;
-  font-weight: 500;
+  color: #f1f5f9;
+  margin-bottom: 0.7rem;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 0.75rem;
-  background: #000000;
-  border: 2px solid #0066ff;
-  border-radius: 4px;
-  color: #00d4ff;
+  padding: 0.9rem 1.2rem;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(168, 85, 247, 0.2);
+  border-radius: 8px;
+  color: #f1f5f9;
   font-size: 1rem;
+  font-family: inherit;
+  transition: all 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #a855f7;
+  background: rgba(15, 23, 42, 0.8);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.2);
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #64748b;
 }
 
 .form-group textarea {
-  min-height: 120px;
+  min-height: 140px;
   resize: vertical;
 }
 
 .submit-btn {
-  background: linear-gradient(90deg, #0066ff, #00d4ff);
-  color: #000;
+  background: linear-gradient(135deg, #a855f7 0%, #7c3aed 100%);
+  color: #fff;
   border: none;
-  padding: 0.9rem 2rem;
-  border-radius: 4px;
+  padding: 1rem 2.5rem;
+  border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   width: 100%;
-  box-shadow: 0 0 20px rgba(0, 102, 255, 0.4);
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.submit-btn:hover::before {
+  left: 100%;
 }
 
 .submit-btn:hover {
-  box-shadow: 0 0 40px rgba(0, 212, 255, 0.6);
-  transform: scale(1.02);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 48px rgba(168, 85, 247, 0.6);
 }
 
 .page {
   display: none;
+  animation: fadeIn 0.6s ease;
 }
 
 .page.active {
   display: block;
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+footer {
+  border-top: 1px solid rgba(168, 85, 247, 0.1);
+  padding: 3rem 2rem;
+  text-align: center;
+  color: #64748b;
+  margin-top: 6rem;
+}
+
 @media (max-width: 768px) {
+  nav {
+    gap: 1.5rem;
+  }
+
   .hero h1 {
     font-size: 2rem;
   }
-  
-  .contact-container {
+
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .contact-wrapper {
     grid-template-columns: 1fr;
   }
-  
+
   .portfolio-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Smooth transitions */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 </style>
@@ -373,8 +551,8 @@ nav a:hover, nav a.active {
     <video autoplay muted loop class="hero-video">
       <source src="https://d8j0ntlcm91z4.cloudfront.net/user_3GxNTu6wCbLfRvLl2dBFl2WSWhr/hf_20260901_100925_e9525e1b-f893-429e-881a-8c4f2c1b81e0.mp4" type="video/mp4">
     </video>
-    <div>
-      <h1>AI-Genererte Videoer for Din Bedrift</h1>
+    <div class="hero-content">
+      <h1>Moderne <span>AI-Videoer</span> for Din Bedrift</h1>
       <p>Profesjonelle reklamevideoer og markedsføringsvideo laget med kunstig intelligens. Rask produksjon, høy kvalitet, rimelige priser.</p>
       <button class="cta-btn" onclick="showPage('portfolio')">Se Porteføljen</button>
     </div>
@@ -382,93 +560,113 @@ nav a:hover, nav a.active {
 </div>
 
 <div id="portfolio" class="page">
-  <div class="portfolio-container">
-    <div class="portfolio-header">
-      <h1>Portefølje</h1>
-      <p>Utforsk våre nyeste AI-genererte videoprosjekter. Fra engasjerende reklamevideoer til dynamiske produktpresentasjoner – vi leverer profesjonell kvalitet raskt og effektivt.</p>
+  <section class="portfolio-section">
+    <div class="section-header">
+      <h2>Hva Vi <span>Lager</span></h2>
+      <p>Videoer som fanger oppmerksomhet og driver resultat</p>
     </div>
 
     <div class="portfolio-grid">
       <div class="project-card">
-        <div class="video-placeholder">▶</div>
+        <div class="video-icon">▶</div>
         <div class="project-content">
-          <h3>E-handel Reklame</h3>
-          <p>Dynamisk produktvideo med 3D-modeller og smooth kamera-bevegelser. Ideelt for å øke konversjoner på nettsiden din. Klar på 72 timer.</p>
+          <h3>E-handel Boosters</h3>
+          <p>Dynamiske produktvideoer som øker konversjoner. 3D-visualisering, smooth kamerawerk, og som gjør folk vil kjøpe.</p>
         </div>
       </div>
 
       <div class="project-card">
-        <div class="video-placeholder">▶</div>
+        <div class="video-icon">▶</div>
         <div class="project-content">
-          <h3>Bedriftspresentasjon</h3>
-          <p>Kort, kraftfull presentasjonsvideo som forklarer tjenestene dine. Med AI-generert stemmeskrift og profesjonell musikk. Gjør deg ut fra konkurrentene.</p>
+          <h3>Bedriftspresentasjoner</h3>
+          <p>Korte, kraftfulle videoer som forklarer hvem du er. Med AI-stemmeskrift og profesjonell musikk som faktisk gjør inntrykk.</p>
         </div>
       </div>
 
       <div class="project-card">
-        <div class="video-placeholder">▶</div>
+        <div class="video-icon">▶</div>
         <div class="project-content">
-          <h3>Social Media Reel</h3>
-          <p>30-sekunders AI-generert reel for restaurant. Viser mat, atmosfære og gjester. Optimalisert for Instagram og TikTok.</p>
+          <h3>Social Media Reels</h3>
+          <p>30-sekunders AI-genererte reels optimalisert for Instagram og TikTok. Mat, ambisjon, resultat – alt som trengs for å gå viral.</p>
         </div>
       </div>
 
       <div class="project-card">
-        <div class="video-placeholder">▶</div>
+        <div class="video-icon">▶</div>
         <div class="project-content">
-          <h3>Corporate Event</h3>
-          <p>Sammenklipping av firmafest/konferanse med AI-enhanced bildekvalitet og dynamiske overganger. Dele på LinkedIn og intern kommunikasjon.</p>
+          <h3>Event Dokumentasjon</h3>
+          <p>Firmafestar og konferanser gjort flott. AI-enhanced bildekvalitet, dynamiske klipp, og noe å dele på LinkedIn som folk faktisk ser.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="video-icon">▶</div>
+        <div class="project-content">
+          <h3>Animerte Eksplainere</h3>
+          <p>Komplekse idéer gjort enkle og visuelt fascinerende. Perfekt når du trenger å forklare teknologi eller konsepter raskt.</p>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="video-icon">▶</div>
+        <div class="project-content">
+          <h3>Testimonials & Casestudier</h3>
+          <p>Kundestoriene dine fortalt visuelt. AI-genrert B-roll, smooth animasjoner, og autentisk som riktig mennesker har sagt det.</p>
         </div>
       </div>
     </div>
-  </div>
+  </section>
 </div>
 
 <div id="contact" class="page">
-  <div class="contact-section">
-    <div class="contact-header">
-      <h1>Kontakt</h1>
-      <p>Klar for å få laget en AI-video for bedriften din? Kontakt oss i dag – vi svarer innen 24 timer.</p>
+  <section class="contact-section">
+    <div class="section-header">
+      <h2>La Oss <span>Prate</span></h2>
+      <p>Klar for å gjøre noe fascinerende? Vi svarer innen 24 timer.</p>
     </div>
 
-    <div class="contact-container">
+    <div class="contact-wrapper">
       <div class="contact-info">
-        <h3>Kontaktinfo</h3>
+        <h3>Get in Touch</h3>
         <div class="info-item">
-          <div class="info-label">📧 E-post</div>
+          <span class="info-label">📧 E-post</span>
           <div class="info-value">ferdigweb@gmail.com</div>
         </div>
         <div class="info-item">
-          <div class="info-label">💬 Emne</div>
-          <div class="info-value">Avtale time, spørsmål om pris, eller beskriv ditt prosjekt</div>
+          <span class="info-label">💬 Send</span>
+          <div class="info-value">Beskrjv ditt prosjekt, spørsmål om pris, eller book en uformell prat</div>
         </div>
-        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid #0066ff; color: #a0d4ff; font-size: 0.9rem;">
-          Vi spesialiserer oss på AI-genererte videoer som er rask, rimelig og profesjonell. Uansett om du trenger produktvideo, reklame eller bedriftspresentasjon – vi leverer resultater som selger.
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid rgba(168, 85, 247, 0.2); color: #cbd5e1;">
+          Vi spesialiserer oss på AI-videoer som er **rask, rimelig, og resultatorientert**. Enten produktvideo, brand story, eller noe helt tredje – vi leverer noe som faktisk gjør skillnaden.
         </div>
       </div>
 
-     <form class="contact-form" action="https://formspree.io/f/mvkokkea" method="POST">
+      <form class="contact-form" action="https://formspree.io/f/mvkokkea" method="POST">
         <div class="form-group">
-          <label>Ditt navn *</label>
-          <input type="text" placeholder="Navn" name="navn" required>
+          <label>Ditt navn</label>
+          <input type="text" placeholder="Navn ditt" name="navn" required>
         </div>
         <div class="form-group">
-          <label>Din e-post *</label>
-          <input type="email" placeholder="E-post" name="email" required>
+          <label>Din e-post</label>
+          <input type="email" placeholder="e-post@din.com" name="email" required>
         </div>
         <div class="form-group">
-          <label>Emne *</label>
-          <input type="text" placeholder="Emne" name="subject" required>
+          <label>Tema</label>
+          <input type="text" placeholder="Hva handler det om?" name="subject" required>
         </div>
         <div class="form-group">
-          <label>Melding *</label>
-          <textarea placeholder="Beskriv ditt prosjekt..." name="message" required></textarea>
+          <label>Melding</label>
+          <textarea placeholder="Fortell oss om idéen din..." name="message" required></textarea>
         </div>
         <button type="submit" class="submit-btn">Send melding</button>
       </form>
     </div>
-  </div>
+  </section>
 </div>
+
+<footer>
+  <p>© 2026 ferdigweb. Laget med AI-lidenskap og moderne design.</p>
+</footer>
 
 <script>
 function showPage(page) {
@@ -483,7 +681,7 @@ function showPage(page) {
 
 function handleSubmit(e) {
   e.preventDefault();
-  alert('Takk for meldingen! Vi svarer innen 24 timer.');
+  alert('Takk! Vi svarer raskt.');
   e.target.reset();
 }
 </script>
